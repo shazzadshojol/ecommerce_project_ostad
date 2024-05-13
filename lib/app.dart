@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:ecommerce_project/controller_binder.dart';
 import 'package:ecommerce_project/presentation/screens/splash_screen.dart';
 import 'package:ecommerce_project/presentation/utility/app_colors.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,13 +19,23 @@ class _CraftyBayState extends State<CraftyBay> {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
+      initialBinding: ControllerBinder(),
       home: const SplashScreen(),
       theme: ThemeData(
           colorSchemeSeed: AppColors.primaryColor,
           textTheme: _buildTextTheme(),
           inputDecorationTheme: _inputDecorationTheme(),
-          elevatedButtonTheme: buildElevatedButtonThemeData()),
+          elevatedButtonTheme: buildElevatedButtonThemeData(),
+          appBarTheme: _buildAppBarTheme(),
+          textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                  foregroundColor: AppColors.primaryColor))),
     );
+  }
+
+  AppBarTheme _buildAppBarTheme() {
+    return const AppBarTheme(
+        backgroundColor: Colors.white, foregroundColor: Colors.black87);
   }
 
   ElevatedButtonThemeData buildElevatedButtonThemeData() {

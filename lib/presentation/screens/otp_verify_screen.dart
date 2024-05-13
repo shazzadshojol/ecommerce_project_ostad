@@ -19,7 +19,6 @@ class _OtpVerifyScreenState extends State<OtpVerifyScreen> {
   final TextEditingController _otpTextController = TextEditingController();
 
   int countDown = 15;
-  bool waitTime = false;
 
   @override
   void initState() {
@@ -60,7 +59,7 @@ class _OtpVerifyScreenState extends State<OtpVerifyScreen> {
                   onPressed: () {
                     if (countDown == 0) {
                       countDown = 10;
-                      waitTime = false;
+
                       _startTimer();
                     }
                   },
@@ -113,7 +112,7 @@ class _OtpVerifyScreenState extends State<OtpVerifyScreen> {
     Timer.periodic(onStart, (timer) {
       if (countDown == 0) {
         timer.cancel();
-        waitTime = true;
+
         setState(() {});
       } else {
         countDown--;

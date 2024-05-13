@@ -1,5 +1,7 @@
+import 'package:ecommerce_project/presentation/screens/home_screen.dart';
 import 'package:ecommerce_project/presentation/widgets/app_logo.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CompleteProfile extends StatefulWidget {
   const CompleteProfile({super.key});
@@ -77,7 +79,11 @@ class _CompleteProfileState extends State<CompleteProfile> {
             decoration: const InputDecoration(hintText: 'Shipping Address'),
           ),
           const SizedBox(height: 16),
-          ElevatedButton(onPressed: () {}, child: const Text('Complete')),
+          ElevatedButton(
+              onPressed: () {
+                Get.to(() => const HomeScreen());
+              },
+              child: const Text('Complete')),
         ],
       ),
     );
