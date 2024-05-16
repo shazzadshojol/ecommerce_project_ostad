@@ -66,7 +66,7 @@ class CartProductItem extends StatelessWidget {
                 )
               ],
             ),
-          )
+          ),
         ],
       ),
     );

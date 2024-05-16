@@ -18,11 +18,11 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
   final MainBottomNavController _mainBottomNavController =
       Get.find<MainBottomNavController>();
 
-  List<Widget> _screens = [
-    HomeScreen(),
-    CategoryListScreen(),
-    CartListScreen(),
-    WishListScreen(),
+  final List<Widget> _screens = [
+    const HomeScreen(),
+    const CategoryListScreen(),
+    const CartListScreen(),
+    const WishListScreen(),
   ];
 
   @override

@@ -10,28 +10,30 @@ class CategoryItemsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Get.to(() => const ProductListScreen(categoryName: 'Electronics'));
-      },
-      child: Column(children: [
-        Container(
-          padding: const EdgeInsets.all(24),
-          decoration: BoxDecoration(
-              color: AppColors.primaryColor.withOpacity(0.15),
-              borderRadius: BorderRadius.circular(8)),
-          child: const Icon(
-            Icons.shop,
-            size: 30,
-            color: AppColors.primaryColor,
+    return FittedBox(
+      child: GestureDetector(
+        onTap: () {
+          Get.to(() => const ProductListScreen(categoryName: 'Electronics'));
+        },
+        child: Column(children: [
+          Container(
+            padding: const EdgeInsets.all(24),
+            decoration: BoxDecoration(
+                color: AppColors.primaryColor.withOpacity(0.15),
+                borderRadius: BorderRadius.circular(8)),
+            child: const Icon(
+              Icons.shop,
+              size: 30,
+              color: AppColors.primaryColor,
+            ),
           ),
-        ),
-        const SizedBox(height: 8),
-        const Text(
-          'Electronics',
-          style: TextStyle(fontSize: 16, color: AppColors.primaryColor),
-        )
-      ]),
+          const SizedBox(height: 8),
+          const Text(
+            'Electronics',
+            style: TextStyle(fontSize: 16, color: AppColors.primaryColor),
+          )
+        ]),
+      ),
     );
   }
 }
