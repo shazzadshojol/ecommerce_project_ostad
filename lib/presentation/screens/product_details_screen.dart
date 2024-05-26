@@ -1,3 +1,4 @@
+import 'package:ecommerce_project/presentation/screens/reviews_screen.dart';
 import 'package:ecommerce_project/presentation/utility/app_colors.dart';
 import 'package:ecommerce_project/presentation/widgets/cart_increment_decrement.dart';
 import 'package:ecommerce_project/presentation/widgets/color_picker.dart';
@@ -5,6 +6,7 @@ import 'package:ecommerce_project/presentation/widgets/product_image_slider.dart
 import 'package:ecommerce_project/presentation/widgets/size_picker.dart';
 import 'package:ecommerce_project/presentation/widgets/wish_or_delete_button.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   const ProductDetailsScreen({super.key});
@@ -116,7 +118,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     fontWeight: FontWeight.w600,
                     color: AppColors.textColor)),
             const SizedBox(width: 8),
-            TextButton(onPressed: () {}, child: const Text('Reviews')),
+            TextButton(
+                onPressed: () {
+                  Get.to(() => const ReviewsScreen());
+                },
+                child: const Text('Reviews')),
             const WishOrDeleteButton(),
           ],
         )

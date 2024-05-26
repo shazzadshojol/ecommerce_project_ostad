@@ -10,6 +10,8 @@ import 'package:get/get.dart';
 class CraftyBay extends StatefulWidget {
   const CraftyBay({super.key});
 
+  static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
   @override
   State<CraftyBay> createState() => _CraftyBayState();
 }
@@ -18,6 +20,7 @@ class _CraftyBayState extends State<CraftyBay> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      navigatorKey: CraftyBay.navigatorKey,
       debugShowCheckedModeBanner: false,
       initialBinding: ControllerBinder(),
       home: const SplashScreen(),

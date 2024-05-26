@@ -1,11 +1,14 @@
+import 'package:ecommerce_project/presentation/state_holders/home_slider_controller.dart';
 import 'package:ecommerce_project/presentation/utility/image_path.dart';
 import 'package:ecommerce_project/presentation/widgets/category_items.dart';
 import 'package:ecommerce_project/presentation/widgets/circular_icon_button.dart';
+import 'package:ecommerce_project/presentation/widgets/circular_indicator.dart';
 import 'package:ecommerce_project/presentation/widgets/home_slider_banner.dart';
 import 'package:ecommerce_project/presentation/widgets/prodect_card.dart';
 import 'package:ecommerce_project/presentation/widgets/section_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -28,7 +31,15 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               _buildSearchTextField(),
               const SizedBox(height: 16),
-              const HomeSliderBanner(),
+              GetBuilder<HomeSliderController>(builder: (sliderController) {
+                if (sliderController.inProgress) {
+                  return const CircularIndicator();
+                }
+
+                return HomeSliderBanner(
+                  sliderList: sliderController.sliderList,
+                );
+              }),
               const SizedBox(height: 16),
               SectionHeader(
                 title: 'All Category',
