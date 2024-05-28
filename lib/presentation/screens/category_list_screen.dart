@@ -1,5 +1,7 @@
+import 'package:ecommerce_project/presentation/state_holders/category_list_controller.dart';
 import 'package:ecommerce_project/presentation/state_holders/main_bottom_nav_controller.dart';
 import 'package:ecommerce_project/presentation/widgets/category_items.dart';
+import 'package:ecommerce_project/presentation/widgets/progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -31,13 +33,25 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
             icon: const Icon(Icons.arrow_back),
           ),
         ),
-        body: GridView.builder(
-            itemCount: 20,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 4),
-            itemBuilder: (context, index) {
-              return const CategoryItemsList();
-            }),
+        body: GetBuilder<CategoryListController>(
+            builder: (categoryListController) {
+          if (categoryListController.inProgress) {
+            return const ProgressIndicatorCircular();
+          }
+
+          return RefreshIndicator(
+            onRefresh: () async => categoryListController.getCategory(),
+            child: GridView.builder(
+                itemCount: categoryListController.categoryList.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 4),
+                itemBuilder: (context, index) {
+                  return CategoryItemsList(
+                    categoryData: categoryListController.categoryList[index],
+                  );
+                }),
+          );
+        }),
       ),
     );
   }

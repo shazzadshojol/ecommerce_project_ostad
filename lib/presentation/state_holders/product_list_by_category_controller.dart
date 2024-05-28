@@ -1,32 +1,31 @@
-import 'package:ecommerce_project/data/models/slider_data.dart';
 import 'package:ecommerce_project/data/models/network_response.dart';
-import 'package:ecommerce_project/data/models/slider_list_models.dart';
+import 'package:ecommerce_project/data/models/product_list_model.dart';
 import 'package:ecommerce_project/data/network_caller/network_caller.dart';
 import 'package:ecommerce_project/data/utility/urls.dart';
-import 'package:get/get.dart%20';
+import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
-class HomeSliderController extends GetxController {
+class ProductListByCategoryController extends GetxController {
   bool _inProgress = false;
   String _errorMessage = '';
-  List<CategoryListModels> _sliderList = [];
+  List _productList = [];
 
   bool get inProgress => _inProgress;
 
   String get errorMessage => _errorMessage;
 
-  List<CategoryListModels> get sliderList => _sliderList;
+  List get productList => _productList;
 
-  Future<bool> getSlider() async {
+  Future<bool> getProductList(int categoryId) async {
     bool isSuccess = true;
     _inProgress = true;
     update();
 
-    final NetworkResponse response =
-        await NetworkCaller.getRequest(url: Urls.homeSlider);
+    final NetworkResponse response = await NetworkCaller.getRequest(
+        url: Urls.productListCategory(categoryId));
 
     if (response.isSuccess) {
-      _sliderList =
-          SliderListModels.fromJson(response.responseData).sliderDataList ?? [];
+      _productList =
+          ProductListModel.fromJson(response.responseData).productList ?? [];
     } else {
       _errorMessage = response.errorMessage;
     }

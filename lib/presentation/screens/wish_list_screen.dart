@@ -1,5 +1,5 @@
 import 'package:ecommerce_project/presentation/state_holders/main_bottom_nav_controller.dart';
-import 'package:ecommerce_project/presentation/widgets/prodect_card.dart';
+import 'package:ecommerce_project/presentation/widgets/product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -36,9 +36,10 @@ class _WishListScreenState extends State<WishListScreen> {
                 crossAxisCount: 3),
             itemBuilder: (context, index) {
               return const FittedBox(
-                  child: ProductCard(
-                showAddToWishList: false,
-              ));
+                  // child: ProductCard(
+                  //   showAddToWishList: false, product: ,
+                  // ),
+                  );
             }),
       ),
     );

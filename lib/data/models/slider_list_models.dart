@@ -1,17 +1,17 @@
-import 'package:ecommerce_project/data/models/data_class/slider_data.dart';
+import 'package:ecommerce_project/data/models/slider_data.dart';
 
 class SliderListModels {
   String? msg;
-  List<SliderData>? sliderDataList;
+  List<CategoryListModels>? sliderDataList;
 
   SliderListModels({this.msg, this.sliderDataList});
 
   SliderListModels.fromJson(Map<String, dynamic> json) {
     msg = json['msg'];
     if (json['data'] != null) {
-      sliderDataList = <SliderData>[];
+      sliderDataList = <CategoryListModels>[];
       json['data'].forEach((v) {
-        sliderDataList!.add(SliderData.fromJson(v));
+        sliderDataList!.add(CategoryListModels.fromJson(v));
       });
     }
   }

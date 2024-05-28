@@ -2,8 +2,12 @@ import 'package:ecommerce_project/presentation/screens/cart_list_scree.dart';
 import 'package:ecommerce_project/presentation/screens/category_list_screen.dart';
 import 'package:ecommerce_project/presentation/screens/home_screen.dart';
 import 'package:ecommerce_project/presentation/screens/wish_list_screen.dart';
+import 'package:ecommerce_project/presentation/state_holders/category_list_controller.dart';
 import 'package:ecommerce_project/presentation/state_holders/home_slider_controller.dart';
 import 'package:ecommerce_project/presentation/state_holders/main_bottom_nav_controller.dart';
+import 'package:ecommerce_project/presentation/state_holders/new_products_list_controller.dart';
+import 'package:ecommerce_project/presentation/state_holders/popular_products_list_controller.dart';
+import 'package:ecommerce_project/presentation/state_holders/special_products_list_controller.dart';
 import 'package:ecommerce_project/presentation/utility/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -30,6 +34,10 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
   void initState() {
     super.initState();
     Get.find<HomeSliderController>().getSlider();
+    Get.find<CategoryListController>().getCategory();
+    Get.find<PopularProductsListController>().getPopularProductList();
+    Get.find<NewProductsListController>().getNewProductList();
+    Get.find<SpecialProductsListController>().getSpecialProductList();
   }
 
   @override

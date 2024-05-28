@@ -1,15 +1,19 @@
+import 'package:ecommerce_project/data/models/product_details_model.dart';
 import 'package:ecommerce_project/presentation/screens/reviews_screen.dart';
+import 'package:ecommerce_project/presentation/state_holders/product_details_controller.dart';
 import 'package:ecommerce_project/presentation/utility/app_colors.dart';
 import 'package:ecommerce_project/presentation/widgets/cart_increment_decrement.dart';
-import 'package:ecommerce_project/presentation/widgets/color_picker.dart';
 import 'package:ecommerce_project/presentation/widgets/product_image_slider.dart';
+import 'package:ecommerce_project/presentation/widgets/progress_indicator.dart';
 import 'package:ecommerce_project/presentation/widgets/size_picker.dart';
 import 'package:ecommerce_project/presentation/widgets/wish_or_delete_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
-  const ProductDetailsScreen({super.key});
+  const ProductDetailsScreen({super.key, required this.productId});
+
+  final int productId;
 
   @override
   State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
@@ -17,93 +21,110 @@ class ProductDetailsScreen extends StatefulWidget {
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   @override
+  void initState() {
+    super.initState();
+    Get.find<ProductDetailsController>().getProductDetails(widget.productId);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Product Details'),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const ProductImageSlider(),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                'Nike UltraComfort Running Shoes',
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                            ),
-                            const CartIncrementDecrement()
-                          ],
-                        ),
-                        buildReviewsSection(),
-                        const SizedBox(height: 10),
-                        Text(
-                          'Color',
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                        const SizedBox(height: 10),
-                        ColorPicker(
-                          colors: const [
-                            Colors.black87,
-                            Colors.redAccent,
-                            Colors.blue,
-                            Colors.green,
-                          ],
-                          onChange: (Color selectedColor) {},
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                          'Size',
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                        const SizedBox(height: 10),
-                        SizePicker(sizes: [
-                          'S',
-                          'M',
-                          'L',
-                          'XL',
-                        ], onChange: (String s) {}),
-                        const SizedBox(height: 10),
-                        Text(
-                          'Description',
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                        const SizedBox(height: 10),
-                        const Text('''
-              
-              Weight: 250 grams per shoe
-              Upper Material: Breathable mesh
-              Midsole: EVA foam
-              Outsole: High-traction rubber
-              Insole: Memory foam
-              Available Sizes: US 5-13 (Men's and Women's)
-              Colors: Black, White, Red, Blue, Green, and Purple
-                      
-               ''')
+      body: GetBuilder<ProductDetailsController>(
+          builder: (productDetailsController) {
+        if (productDetailsController.inProgress) {
+          return const ProgressIndicatorCircular();
+        }
+
+        if (productDetailsController.errorMessage.isNotEmpty) {
+          return Center(
+            child: Text(productDetailsController.errorMessage),
+          );
+        }
+
+        ProductDetailsModel productDetailsModel =
+            productDetailsController.productDetailsModel;
+
+        return Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    ProductImageSlider(
+                      image: [
+                        productDetailsModel.img1 ?? '',
+                        productDetailsModel.img2 ?? '',
+                        productDetailsModel.img3 ?? '',
+                        productDetailsModel.img4 ?? '',
                       ],
                     ),
-                  )
-                ],
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  productDetailsModel.product?.title ?? '',
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
+                                ),
+                              ),
+                              const CartIncrementDecrement()
+                            ],
+                          ),
+                          buildReviewsSection(productDetailsModel),
+                          const SizedBox(height: 10),
+                          Text(
+                            'Color',
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                          const SizedBox(height: 10),
+                          SizePicker(
+                            sizes: productDetailsModel.color?.split(',') ?? [],
+                            onChange: (String s) {},
+                            isRounded: false,
+                          ),
+                          const SizedBox(height: 10),
+                          Text(
+                            'Size',
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                          const SizedBox(height: 10),
+                          SizePicker(
+                            sizes: productDetailsModel.size?.split(',') ?? [],
+                            onChange: (String s) {},
+                            isRounded: false,
+                          ),
+                          const SizedBox(height: 10),
+                          Text(
+                            'Description',
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                          const SizedBox(height: 10),
+                          Text(productDetailsModel.product?.shortDes ?? ''),
+                          const SizedBox(height: 10),
+                          Text(productDetailsModel.des ?? ''),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
-          ),
-          _buildCheckout()
-        ],
-      ),
+            _buildAddToCartSection(productDetailsModel)
+          ],
+        );
+      }),
     );
   }
 
-  Widget buildReviewsSection() {
+  Widget buildReviewsSection(ProductDetailsModel productDetailsModel) {
     return Wrap(
       children: [
         Wrap(
@@ -112,8 +133,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           spacing: 5,
           children: [
             const Icon(Icons.star, color: Colors.amber, size: 20),
-            const Text('3.4',
-                style: TextStyle(
+            Text('${productDetailsModel.product?.star ?? ''}',
+                style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
                     color: AppColors.textColor)),
@@ -130,30 +151,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     );
   }
 
-  Widget _buildCheckout() {
+  Widget _buildAddToCartSection(ProductDetailsModel productDetailsModel) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(color: AppColors.primaryColor.withOpacity(0.1)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Total price:',
-                style: TextStyle(
-                    fontWeight: FontWeight.w600, color: AppColors.textColor),
-              ),
-              Text(
-                '\$1000',
-                style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.primaryColor),
-              )
-            ],
-          ),
+          _buildPrice(productDetailsModel),
           SizedBox(
             width: 120,
             child: ElevatedButton(
@@ -163,6 +168,26 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           )
         ],
       ),
+    );
+  }
+
+  Column _buildPrice(ProductDetailsModel productDetailsModel) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Total price:',
+          style: TextStyle(
+              fontWeight: FontWeight.w600, color: AppColors.textColor),
+        ),
+        Text(
+          '\$${productDetailsModel.product?.price ?? 0}',
+          style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: AppColors.primaryColor),
+        )
+      ],
     );
   }
 }
