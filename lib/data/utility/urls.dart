@@ -13,4 +13,13 @@ class Urls {
 
   static String productDetails(int productId) =>
       '$_baseUrl/ProductDetailsById/$productId';
+
+  static const String createCartList = '$_baseUrl/CreateCartList';
+
+  static String verifyEmailUrl(String email) => '$_baseUrl/UserLogin/$email';
+
+  static String verifyOtp(String email, String otp) =>
+      '$_baseUrl/VerifyLogin/$email/$otp';
+
+  static const String createProfile = '$_baseUrl/CreateProfile';
 }

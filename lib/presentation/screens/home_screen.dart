@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:ecommerce_project/data/models/category_data.dart';
 import 'package:ecommerce_project/data/models/product_models.dart';
+import 'package:ecommerce_project/presentation/screens/complete_profile_screen.dart';
 import 'package:ecommerce_project/presentation/state_holders/category_list_controller.dart';
 import 'package:ecommerce_project/presentation/state_holders/home_slider_controller.dart';
 import 'package:ecommerce_project/presentation/state_holders/main_bottom_nav_controller.dart';
@@ -179,7 +182,10 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               CircularIconButton(
                 icon: Icons.person,
-                onTap: () {},
+                onTap: () {
+                  log('Person icon clicked');
+                  Get.to(() => const CompleteProfileScreen());
+                },
               ),
               const SizedBox(width: 8),
               CircularIconButton(

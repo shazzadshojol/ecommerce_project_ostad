@@ -1,5 +1,7 @@
+import 'package:ecommerce_project/data/models/cart_model.dart';
 import 'package:ecommerce_project/data/models/product_details_model.dart';
 import 'package:ecommerce_project/presentation/screens/reviews_screen.dart';
+import 'package:ecommerce_project/presentation/state_holders/add_to_cart_controller.dart';
 import 'package:ecommerce_project/presentation/state_holders/product_details_controller.dart';
 import 'package:ecommerce_project/presentation/utility/app_colors.dart';
 import 'package:ecommerce_project/presentation/widgets/cart_increment_decrement.dart';
@@ -20,6 +22,10 @@ class ProductDetailsScreen extends StatefulWidget {
 }
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
+  final int _cartCounter = 1;
+  late String _selectColor;
+  late String _selectSize;
+
   @override
   void initState() {
     super.initState();
@@ -46,6 +52,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
         ProductDetailsModel productDetailsModel =
             productDetailsController.productDetailsModel;
+
+        List<String> size = productDetailsModel.size?.split(',') ?? [];
+        List<String> color = productDetailsModel.color?.split(',') ?? [];
+
+        _selectColor = color.first;
+        _selectSize = size.first;
 
         return Column(
           children: [
@@ -86,8 +98,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           ),
                           const SizedBox(height: 10),
                           SizePicker(
-                            sizes: productDetailsModel.color?.split(',') ?? [],
-                            onChange: (String s) {},
+                            sizes: color,
+                            onChange: (String s) {
+                              _selectColor = s;
+                            },
                             isRounded: false,
                           ),
                           const SizedBox(height: 10),
@@ -97,9 +111,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           ),
                           const SizedBox(height: 10),
                           SizePicker(
-                            sizes: productDetailsModel.size?.split(',') ?? [],
-                            onChange: (String s) {},
-                            isRounded: false,
+                            sizes: size,
+                            onChange: (String s) {
+                              _selectSize = s;
+                            },
+                            isRounded: true,
                           ),
                           const SizedBox(height: 10),
                           Text(
@@ -161,10 +177,24 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           _buildPrice(productDetailsModel),
           SizedBox(
             width: 120,
-            child: ElevatedButton(
-              onPressed: () {},
-              child: const Text('Add to cart'),
-            ),
+            child:
+                GetBuilder<AddToCartController>(builder: (addToCartController) {
+              if (addToCartController.inProgress) {
+                return const ProgressIndicatorCircular();
+              }
+
+              return ElevatedButton(
+                onPressed: () {
+                  CartModel cartModel = CartModel(
+                      productId: widget.productId,
+                      color: _selectColor,
+                      size: _selectSize,
+                      qty: _cartCounter);
+                  addToCartController.addToCart(cartModel);
+                },
+                child: const Text('Add to cart'),
+              );
+            }),
           )
         ],
       ),

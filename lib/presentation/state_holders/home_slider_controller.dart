@@ -17,7 +17,7 @@ class HomeSliderController extends GetxController {
   List<CategoryListModels> get sliderList => _sliderList;
 
   Future<bool> getSlider() async {
-    bool isSuccess = true;
+    bool isSuccess = false;
     _inProgress = true;
     update();
 

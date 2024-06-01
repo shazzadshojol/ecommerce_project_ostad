@@ -16,7 +16,7 @@ class ProductListByCategoryController extends GetxController {
   List get productList => _productList;
 
   Future<bool> getProductList(int categoryId) async {
-    bool isSuccess = true;
+    bool isSuccess = false;
     _inProgress = true;
     update();
 

@@ -3,14 +3,23 @@ import 'dart:developer';
 
 import 'package:ecommerce_project/data/models/network_response.dart';
 import 'package:ecommerce_project/presentation/screens/email_verify_screen.dart';
+import 'package:ecommerce_project/presentation/state_holders/auth_controller.dart';
 import 'package:get/get.dart' as getx;
 import 'package:http/http.dart';
 
 class NetworkCaller {
-  static Future<NetworkResponse> getRequest({required String url}) async {
+  static Future<NetworkResponse> getRequest(
+      {required String url, bool fromAuth = false}) async {
     log(url.toString());
+    log(AuthController.accessToken.toString());
     try {
-      final Response response = await get(Uri.parse(url));
+      final Response response = await get(
+        Uri.parse(url),
+        headers: {
+          'accept': 'application/json',
+          'token': AuthController.accessToken
+        },
+      );
       log(response.statusCode.toString());
       log(response.body.toString());
       if (response.statusCode == 200) {
@@ -22,6 +31,9 @@ class NetworkCaller {
           responseData: decodedData,
         );
       } else if (response.statusCode == 401) {
+        if (fromAuth = true) {
+          _moveToNextScreen();
+        }
         return NetworkResponse(
           responseCode: response.statusCode,
           isSuccess: false,
@@ -46,9 +58,14 @@ class NetworkCaller {
   static Future<NetworkResponse> postRequest(
       {required String url, Map<String, dynamic>? body}) async {
     log(url.toString());
+    log(AuthController.accessToken.toString());
     try {
       final Response response = await post(Uri.parse(url),
-          headers: {'accept': 'application/json'}, body: body);
+          headers: {
+            'accept': 'application/json',
+            'token': AuthController.accessToken
+          },
+          body: jsonEncode(body));
 
       log(response.statusCode.toString());
       log(response.body.toString());

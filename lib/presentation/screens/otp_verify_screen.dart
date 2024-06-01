@@ -1,7 +1,10 @@
 import 'dart:async';
 import 'package:ecommerce_project/presentation/screens/complete_profile_screen.dart';
+import 'package:ecommerce_project/presentation/state_holders/verify_otp_controller.dart';
 import 'package:ecommerce_project/presentation/utility/app_colors.dart';
+import 'package:ecommerce_project/presentation/utility/snack_message.dart';
 import 'package:ecommerce_project/presentation/widgets/app_logo.dart';
+import 'package:ecommerce_project/presentation/widgets/progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -18,7 +21,7 @@ class OtpVerifyScreen extends StatefulWidget {
 class _OtpVerifyScreenState extends State<OtpVerifyScreen> {
   final TextEditingController _otpTextController = TextEditingController();
 
-  int countDown = 15;
+  int countDown = 120;
 
   @override
   void initState() {
@@ -48,17 +51,32 @@ class _OtpVerifyScreenState extends State<OtpVerifyScreen> {
               const SizedBox(height: 8),
               _buildPinField(),
               const SizedBox(height: 16),
-              ElevatedButton(
-                  onPressed: () {
-                    Get.to(() => const CompleteProfile());
-                  },
-                  child: const Text('Next')),
+              GetBuilder<VerifyOtpController>(builder: (verifyOtpController) {
+                if (verifyOtpController.inProgress) {
+                  return const ProgressIndicatorCircular();
+                }
+                return ElevatedButton(
+                    onPressed: () async {
+                      final result = await verifyOtpController.verifyOtp(
+                          widget.email, _otpTextController.text);
+
+                      if (result == true) {
+                        Get.to(() => const CompleteProfileScreen());
+                      } else {
+                        if (mounted) {
+                          showSnackMessage(
+                              context, verifyOtpController.errorMessage);
+                        }
+                      }
+                    },
+                    child: const Text('Next'));
+              }),
               const SizedBox(height: 30),
               buildRichText(),
               TextButton(
                   onPressed: () {
                     if (countDown == 0) {
-                      countDown = 10;
+                      countDown = 120;
 
                       _startTimer();
                     }

@@ -1,33 +1,27 @@
-import 'package:ecommerce_project/data/models/category_list_model.dart';
-import 'package:ecommerce_project/data/models/category_data.dart';
+import 'package:ecommerce_project/data/models/cart_model.dart';
 import 'package:ecommerce_project/data/models/network_response.dart';
 import 'package:ecommerce_project/data/network_caller/network_caller.dart';
 import 'package:ecommerce_project/data/utility/urls.dart';
 import 'package:get/get.dart%20';
 
-class CategoryListController extends GetxController {
+class VerifyEmailController extends GetxController {
   bool _inProgress = false;
   String _errorMessage = '';
-  List<CategoryData> _categoryList = [];
 
   bool get inProgress => _inProgress;
 
   String get errorMessage => _errorMessage;
 
-  List<CategoryData> get categoryList => _categoryList;
-
-  Future<bool> getCategory() async {
+  Future<bool> verifyEmail(String email) async {
     bool isSuccess = false;
     _inProgress = true;
     update();
 
     final NetworkResponse response =
-        await NetworkCaller.getRequest(url: Urls.categoryList);
+        await NetworkCaller.getRequest(url: Urls.verifyEmailUrl(email));
 
     if (response.isSuccess) {
-      _categoryList = CategoryListModel.fromJson(response.responseData)
-              .categoryListDataModels ??
-          [];
+      isSuccess = true;
     } else {
       _errorMessage = response.errorMessage;
     }
