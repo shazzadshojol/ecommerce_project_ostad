@@ -21,7 +21,6 @@ class AuthController {
   }
 
   static Future<bool> checkLoggedState() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String token = await getToken();
     return token.isNotEmpty;
   }
@@ -32,16 +31,22 @@ class AuthController {
     accessToken = '';
   }
 
-  static Future<void> setUserData(CreateProfileModel createProfileModel) async {
+  static Future setUserData(CreateProfileModel createProfileModel) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    await sharedPreferences.setString(
+    print('Saving user data: ${jsonEncode(createProfileModel.toJson())}');
+    bool isSaved = await sharedPreferences.setString(
         'createProfileModel', jsonEncode(createProfileModel.toJson()));
+    print('User data saved: $isSaved');
+    return isSaved;
   }
 
-  static Future<CreateProfileModel?> getUserData() async {
+  static Future<CreateProfileModel?> getUserData(
+      CreateProfileModel createProfileModel) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String? profileData = sharedPreferences.getString('createProfileModel');
+    print('Retrieved user data: $profileData');
     if (profileData == null) {
+      print('No user data found in getUserData');
       return null;
     }
 

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:ecommerce_project/data/models/category_data.dart';
 import 'package:ecommerce_project/data/models/product_models.dart';
 import 'package:ecommerce_project/presentation/screens/complete_profile_screen.dart';
@@ -9,9 +7,9 @@ import 'package:ecommerce_project/presentation/state_holders/main_bottom_nav_con
 import 'package:ecommerce_project/presentation/state_holders/new_products_list_controller.dart';
 import 'package:ecommerce_project/presentation/state_holders/popular_products_list_controller.dart';
 import 'package:ecommerce_project/presentation/state_holders/special_products_list_controller.dart';
+import 'package:ecommerce_project/presentation/utility/app_colors.dart';
 import 'package:ecommerce_project/presentation/utility/image_path.dart';
 import 'package:ecommerce_project/presentation/widgets/category_items.dart';
-import 'package:ecommerce_project/presentation/widgets/circular_icon_button.dart';
 import 'package:ecommerce_project/presentation/widgets/circular_indicator.dart';
 import 'package:ecommerce_project/presentation/widgets/home_slider_banner.dart';
 import 'package:ecommerce_project/presentation/widgets/product_card.dart';
@@ -180,23 +178,32 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: const EdgeInsets.all(8.0),
           child: Row(
             children: [
-              CircularIconButton(
-                icon: Icons.person,
-                onTap: () {
-                  log('Person icon clicked');
+              IconButton(
+                icon: const Icon(
+                  Icons.person,
+                  color: AppColors.textColor,
+                ),
+                onPressed: () {
                   Get.to(() => const CompleteProfileScreen());
                 },
               ),
               const SizedBox(width: 8),
-              CircularIconButton(
-                icon: Icons.call,
-                onTap: () {},
+              IconButton(
+                icon: const Icon(
+                  Icons.call,
+                  color: AppColors.textColor,
+                ),
+                onPressed: () {},
               ),
               const SizedBox(width: 8),
-              CircularIconButton(
-                icon: Icons.notifications,
-                onTap: () {},
-              )
+              IconButton(
+                icon: const Icon(
+                  Icons.add_alert,
+                  color: AppColors.textColor,
+                ),
+                onPressed: () {},
+              ),
+              const SizedBox(width: 8),
             ],
           ),
         )

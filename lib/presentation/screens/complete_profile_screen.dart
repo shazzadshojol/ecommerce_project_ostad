@@ -1,4 +1,9 @@
+import 'dart:developer';
+
+import 'package:ecommerce_project/data/models/create_profile_data_model.dart';
 import 'package:ecommerce_project/presentation/screens/home_screen.dart';
+import 'package:ecommerce_project/presentation/state_holders/auth_controller.dart';
+import 'package:ecommerce_project/presentation/state_holders/create_profile_controller.dart';
 import 'package:ecommerce_project/presentation/widgets/app_logo.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -36,6 +41,43 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
       TextEditingController();
   final TextEditingController _shippingPhoneTextController =
       TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+  Future<void> _loadUserData() async {
+    try {
+      CreateProfileModel? userData =
+          await AuthController.getUserData(CreateProfileModel());
+      if (userData != null) {
+        print('User data loaded: ${userData.cusName}');
+        _nameTextController.text = userData.cusName ?? '';
+        _customerAddressTextController.text = userData.cusAdd ?? '';
+        _phoneTextController.text = userData.cusPhone ?? '';
+        _cityTextController.text = userData.cusCity ?? '';
+        _stateTextController.text = userData.cusState ?? '';
+        _postCodeTextController.text = userData.cusPostcode ?? '';
+        _countryTextController.text = userData.cusCountry ?? '';
+        _faxTextController.text = userData.cusFax ?? '';
+        _shippingAddressTextController.text = userData.shipAdd ?? '';
+        _shippingNameTextController.text = userData.shipName ?? '';
+        _shippingCityTextController.text = userData.shipCity ?? '';
+        _shippingStateTextController.text = userData.shipState ?? '';
+        _shippingPostCodeTextController.text = userData.shipPostcode ?? '';
+        _shippingPostCodeTextController.text = userData.shipPostcode ?? '';
+        _shippingPhoneTextController.text = userData.shipPhone ?? '';
+
+        setState(() {});
+      } else {
+        print('No user data found in profile screen');
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -169,9 +211,36 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
           ),
           const SizedBox(height: 16),
           ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 if (_formKey.currentState?.validate() ?? false) {
-                  Get.to(() => const HomeScreen());
+                  CreateProfileModel profileModel = CreateProfileModel(
+                    cusName: _nameTextController.text.trim(),
+                    cusAdd: _customerAddressTextController.text.trim(),
+                    cusCity: _cityTextController.text.trim(),
+                    cusState: _stateTextController.text.trim(),
+                    cusPostcode: _postCodeTextController.text.trim(),
+                    cusCountry: _countryTextController.text.trim(),
+                    cusPhone: _phoneTextController.text.trim(),
+                    cusFax: _faxTextController.text.trim(),
+                    shipName: _shippingNameTextController.text.trim(),
+                    shipAdd: _shippingAddressTextController.text.trim(),
+                    shipCity: _shippingCityTextController.text.trim(),
+                    shipState: _shippingStateTextController.text.trim(),
+                    shipPostcode: _shippingPostCodeTextController.text.trim(),
+                    shipCountry: _shippingCountryTextController.text.trim(),
+                    shipPhone: _shippingPhoneTextController.text.trim(),
+                  );
+
+                  final CreateProfileController profileController =
+                      Get.put(CreateProfileController());
+                  bool result =
+                      await profileController.saveUserDetails(profileModel);
+
+                  if (result == true) {
+                    Get.to(() => const HomeScreen());
+                  } else {
+                    profileController.errorMessage;
+                  }
                 }
               },
               child: const Text('Complete')),

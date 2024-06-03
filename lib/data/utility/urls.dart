@@ -22,4 +22,5 @@ class Urls {
       '$_baseUrl/VerifyLogin/$email/$otp';
 
   static const String createProfile = '$_baseUrl/CreateProfile';
+  static const String readProfile = '$_baseUrl/ReadProfile';
 }

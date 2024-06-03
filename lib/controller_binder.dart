@@ -7,6 +7,7 @@ import 'package:ecommerce_project/presentation/state_holders/new_products_list_c
 import 'package:ecommerce_project/presentation/state_holders/popular_products_list_controller.dart';
 import 'package:ecommerce_project/presentation/state_holders/product_details_controller.dart';
 import 'package:ecommerce_project/presentation/state_holders/product_list_by_category_controller.dart';
+import 'package:ecommerce_project/presentation/state_holders/read_profile_controller.dart';
 import 'package:ecommerce_project/presentation/state_holders/special_products_list_controller.dart';
 import 'package:ecommerce_project/presentation/state_holders/verify_email_controller.dart';
 import 'package:ecommerce_project/presentation/state_holders/verify_otp_controller.dart';
@@ -27,5 +28,6 @@ class ControllerBinder extends Bindings {
     Get.put(VerifyEmailController());
     Get.put(VerifyOtpController());
     Get.put(CreateProfileController());
+    Get.put(ReadProfileController());
   }
 }

@@ -7,9 +7,9 @@ import 'package:ecommerce_project/data/utility/urls.dart';
 import 'package:ecommerce_project/presentation/state_holders/auth_controller.dart';
 import 'package:get/get.dart%20';
 
-class CreateProfileController extends GetxController {
+class ReadProfileController extends GetxController {
   bool _inProgress = false;
-  String _errorMessage = 'Profile Updating Failed';
+  String _errorMessage = 'Read Profile Updating Failed';
 
   bool get inProgress => _inProgress;
 
@@ -38,14 +38,14 @@ class CreateProfileController extends GetxController {
       "ship_phone": createProfileModel.shipPhone
     };
 
-    final NetworkResponse response = await NetworkCaller.postRequest(
-        url: Urls.createProfile, body: textFieldDataFromController);
+    final NetworkResponse response =
+        await NetworkCaller.getRequest(url: Urls.readProfile);
 
     if (response.isSuccess) {
       log(Urls.createProfile.toString());
       log(textFieldDataFromController.toString());
       isSuccess = true;
-      await AuthController.setUserData(createProfileModel);
+      await AuthController.getUserData(createProfileModel);
     } else {
       _errorMessage = response.errorMessage;
     }

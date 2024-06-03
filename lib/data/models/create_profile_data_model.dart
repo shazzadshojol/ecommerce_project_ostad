@@ -51,22 +51,22 @@ class CreateProfileModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['cus_name'] = this.cusName;
-    data['cus_add'] = this.cusAdd;
-    data['cus_city'] = this.cusCity;
-    data['cus_state'] = this.cusState;
-    data['cus_postcode'] = this.cusPostcode;
-    data['cus_country'] = this.cusCountry;
-    data['cus_phone'] = this.cusPhone;
-    data['cus_fax'] = this.cusFax;
-    data['ship_name'] = this.shipName;
-    data['ship_add'] = this.shipAdd;
-    data['ship_city'] = this.shipCity;
-    data['ship_state'] = this.shipState;
-    data['ship_postcode'] = this.shipPostcode;
-    data['ship_country'] = this.shipCountry;
-    data['ship_phone'] = this.shipPhone;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['cus_name'] = cusName;
+    data['cus_add'] = cusAdd;
+    data['cus_city'] = cusCity;
+    data['cus_state'] = cusState;
+    data['cus_postcode'] = cusPostcode;
+    data['cus_country'] = cusCountry;
+    data['cus_phone'] = cusPhone;
+    data['cus_fax'] = cusFax;
+    data['ship_name'] = shipName;
+    data['ship_add'] = shipAdd;
+    data['ship_city'] = shipCity;
+    data['ship_state'] = shipState;
+    data['ship_postcode'] = shipPostcode;
+    data['ship_country'] = shipCountry;
+    data['ship_phone'] = shipPhone;
     return data;
   }
 }

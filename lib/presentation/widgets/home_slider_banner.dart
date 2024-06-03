@@ -35,7 +35,7 @@ class _HomeSliderBannerState extends State<HomeSliderBanner> {
   Widget _buildCarouselSlider() {
     return CarouselSlider(
       options: CarouselOptions(
-          height: 200.0,
+          height: 220.0,
           viewportFraction: 1.02,
           onPageChanged: (index, _) {
             _valueNotifier.value = index;
@@ -105,9 +105,7 @@ class _HomeSliderBannerState extends State<HomeSliderBanner> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                onPressed: () {
-                  Get.to(() => const CompleteProfileScreen());
-                },
+                onPressed: () {},
                 child: const Text('Buy now'),
               ),
             )
