@@ -38,8 +38,9 @@ class _OtpVerifyScreenState extends State<OtpVerifyScreen> {
         child: Padding(
           padding: const EdgeInsets.all(24.0),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Spacer(),
               const AppLogo(),
               const SizedBox(height: 16),
               Text('Enter Otp Code', style: textTheme.titleLarge),
@@ -86,7 +87,6 @@ class _OtpVerifyScreenState extends State<OtpVerifyScreen> {
                     style: TextStyle(
                         color: countDown == 0 ? Colors.blue : Colors.grey),
                   )),
-              const Spacer(),
             ],
           ),
         ),

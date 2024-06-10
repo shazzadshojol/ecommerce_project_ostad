@@ -1,4 +1,6 @@
+import 'package:ecommerce_project/data/network_caller/network_caller.dart';
 import 'package:ecommerce_project/presentation/screens/otp_verify_screen.dart';
+import 'package:ecommerce_project/presentation/state_holders/auth_controller.dart';
 import 'package:ecommerce_project/presentation/state_holders/verify_email_controller.dart';
 import 'package:ecommerce_project/presentation/utility/constants.dart';
 import 'package:ecommerce_project/presentation/utility/snack_message.dart';

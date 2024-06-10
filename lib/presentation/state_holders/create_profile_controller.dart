@@ -20,30 +20,14 @@ class CreateProfileController extends GetxController {
     _inProgress = true;
     update();
 
-    Map<String, dynamic> textFieldDataFromController = {
-      "cus_name": createProfileModel.cusName,
-      "cus_add": createProfileModel.cusAdd,
-      "cus_city": createProfileModel.cusCity,
-      "cus_state": createProfileModel.cusState,
-      "cus_postcode": createProfileModel.cusPostcode,
-      "cus_country": createProfileModel.cusCountry,
-      "cus_phone": createProfileModel.cusPhone,
-      "cus_fax": createProfileModel.cusFax,
-      "ship_name": createProfileModel.shipName,
-      "ship_add": createProfileModel.shipAdd,
-      "ship_city": createProfileModel.shipCity,
-      "ship_state": createProfileModel.shipState,
-      "ship_postcode": createProfileModel.shipPostcode,
-      "ship_country": createProfileModel.shipCountry,
-      "ship_phone": createProfileModel.shipPhone
-    };
-
     final NetworkResponse response = await NetworkCaller.postRequest(
-        url: Urls.createProfile, body: textFieldDataFromController);
+        url: Urls.createProfile, body: createProfileModel.toJson());
+
+    log('Data sent${createProfileModel.toJson()}');
 
     if (response.isSuccess) {
       log(Urls.createProfile.toString());
-      log(textFieldDataFromController.toString());
+      log(createProfileModel.toString());
       isSuccess = true;
       await AuthController.setUserData(createProfileModel);
     } else {

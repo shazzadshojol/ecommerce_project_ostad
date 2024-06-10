@@ -4,6 +4,7 @@ import 'package:ecommerce_project/data/models/create_profile_data_model.dart';
 import 'package:ecommerce_project/presentation/screens/home_screen.dart';
 import 'package:ecommerce_project/presentation/state_holders/auth_controller.dart';
 import 'package:ecommerce_project/presentation/state_holders/create_profile_controller.dart';
+import 'package:ecommerce_project/presentation/state_holders/read_profile_controller.dart';
 import 'package:ecommerce_project/presentation/widgets/app_logo.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -83,29 +84,32 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: true,
+        ),
         body: SafeArea(
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                const AppLogo(),
-                const SizedBox(height: 16),
-                Text('Complete Profile', style: textTheme.titleLarge),
-                const SizedBox(height: 8),
-                Text(
-                  'Get Started With Us By Providing Your Details',
-                  style: textTheme.titleSmall,
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    const AppLogo(),
+                    const SizedBox(height: 16),
+                    Text('Complete Profile', style: textTheme.titleLarge),
+                    const SizedBox(height: 8),
+                    Text(
+                      'Get Started With Us By Providing Your Details',
+                      style: textTheme.titleSmall,
+                    ),
+                    const SizedBox(height: 24),
+                    buildCompleteForm(),
+                  ],
                 ),
-                const SizedBox(height: 24),
-                buildCompleteForm(),
-              ],
+              ),
             ),
           ),
-        ),
-      ),
-    ));
+        ));
   }
 
   Widget buildCompleteForm() {
@@ -116,98 +120,98 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
           TextFormField(
             controller: _nameTextController,
             decoration: const InputDecoration(hintText: 'Full Name'),
-            validator: (value) => textValidator(value, 'Enter Full Name'),
+            // validator: (value) => textValidator(value, 'Enter Full Name'),
           ),
           const SizedBox(height: 16),
           TextFormField(
             controller: _customerAddressTextController,
             maxLines: 3,
             decoration: const InputDecoration(hintText: 'Customer Address'),
-            validator: (value) =>
-                textValidator(value, 'Enter Customer Address'),
+            // validator: (value) =>
+            //     textValidator(value, 'Enter Customer Address'),
           ),
           const SizedBox(height: 16),
           TextFormField(
             controller: _cityTextController,
             decoration: const InputDecoration(hintText: 'City'),
-            validator: (value) => textValidator(value, 'Enter City Name'),
+            // validator: (value) => textValidator(value, 'Enter City Name'),
           ),
           const SizedBox(height: 16),
           TextFormField(
             controller: _stateTextController,
             decoration: const InputDecoration(hintText: 'State'),
-            validator: (value) => textValidator(value, 'Enter State Name'),
+            // validator: (value) => textValidator(value, 'Enter State Name'),
           ),
           const SizedBox(height: 16),
           TextFormField(
             controller: _postCodeTextController,
             decoration: const InputDecoration(hintText: 'Postcode'),
-            validator: (value) => textValidator(value, 'Enter Postcode'),
+            // validator: (value) => textValidator(value, 'Enter Postcode'),
           ),
           const SizedBox(height: 16),
           TextFormField(
             controller: _countryTextController,
             decoration: const InputDecoration(hintText: 'Country'),
-            validator: (value) => textValidator(value, 'Enter Country Name'),
+            // validator: (value) => textValidator(value, 'Enter Country Name'),
           ),
           const SizedBox(height: 16),
           TextFormField(
             controller: _phoneTextController,
             decoration: const InputDecoration(hintText: 'Phone No'),
-            validator: (value) => textValidator(value, 'Enter Phone No'),
+            // validator: (value) => textValidator(value, 'Enter Phone No'),
           ),
           const SizedBox(height: 16),
           TextFormField(
             controller: _faxTextController,
             decoration: const InputDecoration(hintText: 'Fax No'),
-            validator: (value) => textValidator(value, 'Enter Fax No'),
+            // validator: (value) => textValidator(value, 'Enter Fax No'),
           ),
           const SizedBox(height: 16),
           TextFormField(
             controller: _shippingNameTextController,
             decoration: const InputDecoration(hintText: 'Shipping Name'),
-            validator: (value) => textValidator(value, 'Enter Shipping Name'),
+            // validator: (value) => textValidator(value, 'Enter Shipping Name'),
           ),
           const SizedBox(height: 16),
           TextFormField(
             controller: _shippingAddressTextController,
             maxLines: 3,
             decoration: const InputDecoration(hintText: 'Shipping Address'),
-            validator: (value) =>
-                textValidator(value, 'Enter Shipping Address'),
+            // validator: (value) =>
+            //     textValidator(value, 'Enter Shipping Address'),
           ),
           const SizedBox(height: 16),
           TextFormField(
             controller: _shippingCityTextController,
             decoration: const InputDecoration(hintText: 'Shipping City'),
-            validator: (value) => textValidator(value, 'Enter Shipping City'),
+            // validator: (value) => textValidator(value, 'Enter Shipping City'),
           ),
           const SizedBox(height: 16),
           TextFormField(
             controller: _shippingStateTextController,
             decoration: const InputDecoration(hintText: 'Shipping State'),
-            validator: (value) => textValidator(value, 'Enter Shipping State'),
+            // validator: (value) => textValidator(value, 'Enter Shipping State'),
           ),
           const SizedBox(height: 16),
           TextFormField(
             controller: _shippingPostCodeTextController,
             decoration: const InputDecoration(hintText: 'Shipping Postcode'),
-            validator: (value) =>
-                textValidator(value, 'Enter Shipping Postcode'),
+            // validator: (value) =>
+            //     textValidator(value, 'Enter Shipping Postcode'),
           ),
           const SizedBox(height: 16),
           TextFormField(
             controller: _shippingCountryTextController,
             decoration: const InputDecoration(hintText: 'Shipping Country'),
-            validator: (value) =>
-                textValidator(value, 'Enter Shipping Country'),
+            // validator: (value) =>
+            //     textValidator(value, 'Enter Shipping Country'),
           ),
           const SizedBox(height: 16),
           TextFormField(
             controller: _shippingPhoneTextController,
             decoration: const InputDecoration(hintText: 'Shipping Phone No'),
-            validator: (value) =>
-                textValidator(value, 'Enter Shipping Phone No'),
+            // validator: (value) =>
+            //     textValidator(value, 'Enter Shipping Phone No'),
           ),
           const SizedBox(height: 16),
           ElevatedButton(
@@ -235,9 +239,20 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                       Get.put(CreateProfileController());
                   bool result =
                       await profileController.saveUserDetails(profileModel);
-
+                  // final ReadProfileController profileController =
+                  //     Get.put(ReadProfileController());
+                  // bool result = await profileController
+                  //     .showUserDetails(ReadProfileModel());
                   if (result == true) {
-                    Get.to(() => const HomeScreen());
+                    final ReadProfileController readProfileController =
+                        Get.put(ReadProfileController());
+                    bool readResult = await readProfileController
+                        .showUserDetails(profileModel);
+                    if (readResult == true) {
+                      Get.to(() => const HomeScreen());
+                    } else {
+                      readProfileController.errorMessage;
+                    }
                   } else {
                     profileController.errorMessage;
                   }
@@ -249,12 +264,12 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
     );
   }
 
-  String? textValidator(String? value, String msg) {
-    if (value?.trim().isEmpty ?? true) {
-      return msg;
-    }
-    return null;
-  }
+  // String? textValidator(String? value, String msg) {
+  //   if (value?.trim().isEmpty ?? true) {
+  //     return msg;
+  //   }
+  //   return null;
+  // }
 
   @override
   void dispose() {

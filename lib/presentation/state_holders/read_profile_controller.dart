@@ -1,11 +1,11 @@
 import 'dart:developer';
-
 import 'package:ecommerce_project/data/models/create_profile_data_model.dart';
 import 'package:ecommerce_project/data/models/network_response.dart';
 import 'package:ecommerce_project/data/network_caller/network_caller.dart';
 import 'package:ecommerce_project/data/utility/urls.dart';
-import 'package:ecommerce_project/presentation/state_holders/auth_controller.dart';
 import 'package:get/get.dart%20';
+
+import 'auth_controller.dart';
 
 class ReadProfileController extends GetxController {
   bool _inProgress = false;
@@ -15,37 +15,19 @@ class ReadProfileController extends GetxController {
 
   String get errorMessage => _errorMessage;
 
-  Future<bool> saveUserDetails(CreateProfileModel createProfileModel) async {
+  Future<bool> showUserDetails(CreateProfileModel createProfileModel) async {
     bool isSuccess = false;
     _inProgress = true;
     update();
 
-    Map<String, dynamic> textFieldDataFromController = {
-      "cus_name": createProfileModel.cusName,
-      "cus_add": createProfileModel.cusAdd,
-      "cus_city": createProfileModel.cusCity,
-      "cus_state": createProfileModel.cusState,
-      "cus_postcode": createProfileModel.cusPostcode,
-      "cus_country": createProfileModel.cusCountry,
-      "cus_phone": createProfileModel.cusPhone,
-      "cus_fax": createProfileModel.cusFax,
-      "ship_name": createProfileModel.shipName,
-      "ship_add": createProfileModel.shipAdd,
-      "ship_city": createProfileModel.shipCity,
-      "ship_state": createProfileModel.shipState,
-      "ship_postcode": createProfileModel.shipPostcode,
-      "ship_country": createProfileModel.shipCountry,
-      "ship_phone": createProfileModel.shipPhone
-    };
-
     final NetworkResponse response =
         await NetworkCaller.getRequest(url: Urls.readProfile);
-
+    log(Urls.readProfile.toString());
     if (response.isSuccess) {
-      log(Urls.createProfile.toString());
-      log(textFieldDataFromController.toString());
       isSuccess = true;
+
       await AuthController.getUserData(createProfileModel);
+      print('User data from read profile: $createProfileModel');
     } else {
       _errorMessage = response.errorMessage;
     }

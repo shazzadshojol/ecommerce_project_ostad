@@ -12,6 +12,7 @@ class NetworkCaller {
       {required String url, bool fromAuth = false}) async {
     log(url.toString());
     log(AuthController.accessToken.toString());
+
     try {
       final Response response = await get(
         Uri.parse(url),
@@ -51,7 +52,8 @@ class NetworkCaller {
     }
   }
 
-  static void _moveToNextScreen() {
+  static void _moveToNextScreen() async {
+    await AuthController.clearUserData();
     getx.Get.to(() => const EmailVerifyScreen());
   }
 
