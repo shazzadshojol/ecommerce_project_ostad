@@ -1,11 +1,32 @@
+import 'package:ecommerce_project/presentation/state_holders/cart_controllers/cart_list_controller.dart';
+import 'package:ecommerce_project/presentation/utility/app_colors.dart';
 import 'package:ecommerce_project/presentation/utility/image_path.dart';
 import 'package:ecommerce_project/presentation/widgets/cart_increment_decrement.dart';
 import 'package:flutter/material.dart';
+import 'package:ecommerce_project/data/models/cart_models/cart_item-model.dart';
+import 'package:get/get.dart';
+import 'package:item_count_number_button/item_count_number_button.dart';
 
-class CartProductItem extends StatelessWidget {
+class CartProductItem extends StatefulWidget {
   const CartProductItem({
     super.key,
+    required this.cartItem,
   });
+
+  final CartItemModel cartItem;
+
+  @override
+  State<CartProductItem> createState() => _CartProductItemState();
+}
+
+class _CartProductItemState extends State<CartProductItem> {
+  late int _counterValue;
+
+  @override
+  void initState() {
+    super.initState();
+    _counterValue = widget.cartItem.qty!;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,21 +53,21 @@ class CartProductItem extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Nike special edition',
+                            '${widget.cartItem.product?.title}',
                             style: Theme.of(context).textTheme.titleMedium,
                           ),
-                          const Wrap(
+                          Wrap(
                             children: [
                               Text(
-                                'Color: Red',
-                                style: TextStyle(
+                                'Color: ${widget.cartItem.color}',
+                                style: const TextStyle(
                                     color: Colors.grey,
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500),
                               ),
                               Text(
-                                'Size: XL',
-                                style: TextStyle(
+                                'Size: ${widget.cartItem.size}',
+                                style: const TextStyle(
                                     color: Colors.grey,
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500),
@@ -60,15 +81,35 @@ class CartProductItem extends StatelessWidget {
                     ],
                   ),
                 ),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [Text('\$100'), CartIncrementDecrement()],
+                  children: [
+                    Text('\$${widget.cartItem.product?.price ?? 0}'),
+                    const CartIncrementDecrement(),
+                    _buildCounter()
+                  ],
                 )
               ],
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildCounter() {
+    return ItemCount(
+      initialValue: _counterValue,
+      minValue: 1,
+      maxValue: 20,
+      decimalPlaces: 0,
+      color: AppColors.primaryColor,
+      onChanged: (value) {
+        _counterValue = value as int;
+        setState(() {});
+        Get.find<CartListController>()
+            .changeProductQuantity(widget.cartItem.id!, _counterValue);
+      },
     );
   }
 }

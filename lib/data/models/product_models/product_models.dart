@@ -1,5 +1,5 @@
 import 'package:ecommerce_project/data/models/brand_model.dart';
-import 'package:ecommerce_project/data/models/category_data.dart';
+import 'package:ecommerce_project/data/models/category_model/category_data.dart';
 
 class ProductModel {
   int? id;

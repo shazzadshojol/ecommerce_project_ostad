@@ -1,11 +1,12 @@
 import 'dart:developer';
+import 'dart:ffi';
 import 'package:ecommerce_project/data/models/create_profile_data_model.dart';
 import 'package:ecommerce_project/data/models/network_response.dart';
 import 'package:ecommerce_project/data/network_caller/network_caller.dart';
 import 'package:ecommerce_project/data/utility/urls.dart';
 import 'package:get/get.dart%20';
 
-import 'auth_controller.dart';
+import '../auth_controller.dart';
 
 class ReadProfileController extends GetxController {
   bool _inProgress = false;
@@ -15,24 +16,28 @@ class ReadProfileController extends GetxController {
 
   String get errorMessage => _errorMessage;
 
-  Future<bool> showUserDetails(CreateProfileModel createProfileModel) async {
-    bool isSuccess = false;
+  var profileData = CreateProfileModel();
+
+  Future<CreateProfileModel?> showUserDetails() async {
     _inProgress = true;
     update();
 
-    final NetworkResponse response =
-        await NetworkCaller.getRequest(url: Urls.readProfile);
-    log(Urls.readProfile.toString());
-    if (response.isSuccess) {
-      isSuccess = true;
+    final NetworkResponse response = await NetworkCaller.getRequest(
+      url: Urls.readProfile,
+    );
 
-      await AuthController.getUserData(createProfileModel);
-      print('User data from read profile: $createProfileModel');
+    // CreateProfileModel? profileModel = CreateProfileModel();
+    if (response.isSuccess) {
+      final profileModel = CreateProfileModel.fromJson(response.responseData);
+      // profileData.value = CreateProfileModel.fromJson(response.responseData);
+      await AuthController.getUserData(profileModel);
+      return profileModel;
     } else {
       _errorMessage = response.errorMessage;
     }
+
     _inProgress = false;
     update();
-    return isSuccess;
+    return null;
   }
 }

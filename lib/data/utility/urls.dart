@@ -23,4 +23,15 @@ class Urls {
 
   static const String createProfile = '$_baseUrl/CreateProfile';
   static const String readProfile = '$_baseUrl/ReadProfile';
+
+  static String addToWishList(int productId) =>
+      '$_baseUrl/CreateWishList/$productId';
+
+  static const String getWishList = '$_baseUrl/CreateWishList';
+
+  static String removeFromWishList(int cartId) =>
+      '$_baseUrl/RemoveWishList/$cartId';
+
+  static const String createProductReview = '$_baseUrl/CreateProductReview';
+  static const String readProductReview = '$_baseUrl/ListReviewByProduct';
 }

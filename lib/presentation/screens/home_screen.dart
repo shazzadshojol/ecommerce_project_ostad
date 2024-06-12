@@ -1,12 +1,12 @@
-import 'package:ecommerce_project/data/models/category_data.dart';
-import 'package:ecommerce_project/data/models/product_models.dart';
+import 'package:ecommerce_project/data/models/category_model/category_data.dart';
+import 'package:ecommerce_project/data/models/product_models/product_models.dart';
 import 'package:ecommerce_project/presentation/screens/complete_profile_screen.dart';
 import 'package:ecommerce_project/presentation/state_holders/category_list_controller.dart';
 import 'package:ecommerce_project/presentation/state_holders/home_slider_controller.dart';
 import 'package:ecommerce_project/presentation/state_holders/main_bottom_nav_controller.dart';
-import 'package:ecommerce_project/presentation/state_holders/new_products_list_controller.dart';
-import 'package:ecommerce_project/presentation/state_holders/popular_products_list_controller.dart';
-import 'package:ecommerce_project/presentation/state_holders/special_products_list_controller.dart';
+import 'package:ecommerce_project/presentation/state_holders/product_list_controllers/new_products_list_controller.dart';
+import 'package:ecommerce_project/presentation/state_holders/product_list_controllers/popular_products_list_controller.dart';
+import 'package:ecommerce_project/presentation/state_holders/product_list_controllers/special_products_list_controller.dart';
 import 'package:ecommerce_project/presentation/utility/app_colors.dart';
 import 'package:ecommerce_project/presentation/utility/image_path.dart';
 import 'package:ecommerce_project/presentation/widgets/category_items.dart';

@@ -1,6 +1,6 @@
 import 'package:ecommerce_project/data/models/network_response.dart';
-import 'package:ecommerce_project/data/models/product_details_model.dart';
-import 'package:ecommerce_project/data/models/product_details_wrapper.dart';
+import 'package:ecommerce_project/data/models/product_models/product_details_model.dart';
+import 'package:ecommerce_project/data/models/product_models/product_details_wrapper.dart';
 import 'package:ecommerce_project/data/network_caller/network_caller.dart';
 import 'package:ecommerce_project/data/utility/urls.dart';
 import 'package:get/get.dart%20';

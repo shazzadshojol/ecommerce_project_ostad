@@ -1,10 +1,9 @@
-import 'dart:developer';
-
 import 'package:ecommerce_project/data/models/create_profile_data_model.dart';
 import 'package:ecommerce_project/presentation/screens/home_screen.dart';
 import 'package:ecommerce_project/presentation/state_holders/auth_controller.dart';
-import 'package:ecommerce_project/presentation/state_holders/create_profile_controller.dart';
-import 'package:ecommerce_project/presentation/state_holders/read_profile_controller.dart';
+import 'package:ecommerce_project/presentation/state_holders/profile_controllers/create_profile_controller.dart';
+import 'package:ecommerce_project/presentation/state_holders/profile_controllers/read_profile_controller.dart';
+import 'package:ecommerce_project/presentation/utility/snack_message.dart';
 import 'package:ecommerce_project/presentation/widgets/app_logo.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -43,41 +42,43 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
   final TextEditingController _shippingPhoneTextController =
       TextEditingController();
 
+  final CreateProfileController profileController =
+      Get.put(CreateProfileController());
+
+  final ReadProfileController readProfileController =
+      Get.put(ReadProfileController());
+
   @override
   void initState() {
     super.initState();
-    _loadUserData();
+    _loadProfileData();
   }
 
-  Future<void> _loadUserData() async {
-    try {
-      CreateProfileModel? userData =
-          await AuthController.getUserData(CreateProfileModel());
-      if (userData != null) {
-        print('User data loaded: ${userData.cusName}');
-        _nameTextController.text = userData.cusName ?? '';
-        _customerAddressTextController.text = userData.cusAdd ?? '';
-        _phoneTextController.text = userData.cusPhone ?? '';
-        _cityTextController.text = userData.cusCity ?? '';
-        _stateTextController.text = userData.cusState ?? '';
-        _postCodeTextController.text = userData.cusPostcode ?? '';
-        _countryTextController.text = userData.cusCountry ?? '';
-        _faxTextController.text = userData.cusFax ?? '';
-        _shippingAddressTextController.text = userData.shipAdd ?? '';
-        _shippingNameTextController.text = userData.shipName ?? '';
-        _shippingCityTextController.text = userData.shipCity ?? '';
-        _shippingStateTextController.text = userData.shipState ?? '';
-        _shippingPostCodeTextController.text = userData.shipPostcode ?? '';
-        _shippingPostCodeTextController.text = userData.shipPostcode ?? '';
-        _shippingPhoneTextController.text = userData.shipPhone ?? '';
+  Future<void> _loadProfileData() async {
+    await readProfileController.showUserDetails();
+    CreateProfileModel? profileData =
+        await AuthController.getUserData(CreateProfileModel());
+    // CreateProfileModel? profileData = readProfileController.profileData.value;
 
-        setState(() {});
-      } else {
-        print('No user data found in profile screen');
-      }
-    } catch (e) {
-      log(e.toString());
+    if (profileData != null) {
+      _nameTextController.text = profileData.cusName ?? '';
+      _customerAddressTextController.text = profileData.cusAdd ?? '';
+      _cityTextController.text = profileData.cusCity ?? '';
+      _stateTextController.text = profileData.cusState ?? '';
+      _postCodeTextController.text = profileData.cusPostcode ?? '';
+      _countryTextController.text = profileData.cusCountry ?? '';
+      _phoneTextController.text = profileData.cusPhone ?? '';
+      _faxTextController.text = profileData.cusFax ?? '';
+      _shippingNameTextController.text = profileData.shipName ?? '';
+      _shippingAddressTextController.text = profileData.shipAdd ?? '';
+      _shippingCityTextController.text = profileData.shipCity ?? '';
+      _shippingStateTextController.text = profileData.shipState ?? '';
+      _shippingPostCodeTextController.text = profileData.shipPostcode ?? '';
+      _shippingCountryTextController.text = profileData.shipCountry ?? '';
+      _shippingPhoneTextController.text = profileData.shipPhone ?? '';
     }
+
+    setState(() {});
   }
 
   @override
@@ -215,7 +216,8 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
           ),
           const SizedBox(height: 16),
           ElevatedButton(
-              onPressed: () async {
+            onPressed: () async {
+              try {
                 if (_formKey.currentState?.validate() ?? false) {
                   CreateProfileModel profileModel = CreateProfileModel(
                     cusName: _nameTextController.text.trim(),
@@ -235,30 +237,26 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                     shipPhone: _shippingPhoneTextController.text.trim(),
                   );
 
-                  final CreateProfileController profileController =
-                      Get.put(CreateProfileController());
                   bool result =
                       await profileController.saveUserDetails(profileModel);
-                  // final ReadProfileController profileController =
-                  //     Get.put(ReadProfileController());
-                  // bool result = await profileController
-                  //     .showUserDetails(ReadProfileModel());
-                  if (result == true) {
-                    final ReadProfileController readProfileController =
-                        Get.put(ReadProfileController());
-                    bool readResult = await readProfileController
-                        .showUserDetails(profileModel);
-                    if (readResult == true) {
-                      Get.to(() => const HomeScreen());
-                    } else {
-                      readProfileController.errorMessage;
-                    }
+
+                  if (result) {
+                    Get.to(() => const HomeScreen());
                   } else {
-                    profileController.errorMessage;
+                    {
+                      if (mounted) {
+                        showSnackMessage(
+                            context, profileController.errorMessage);
+                      }
+                    }
                   }
                 }
-              },
-              child: const Text('Complete')),
+              } catch (e) {
+                e.toString();
+              }
+            },
+            child: const Text('Complete'),
+          )
         ],
       ),
     );

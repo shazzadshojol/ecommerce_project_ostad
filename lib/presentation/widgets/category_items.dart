@@ -1,4 +1,4 @@
-import 'package:ecommerce_project/data/models/category_data.dart';
+import 'package:ecommerce_project/data/models/category_model/category_data.dart';
 import 'package:ecommerce_project/presentation/screens/product_list_screen.dart';
 import 'package:ecommerce_project/presentation/utility/app_colors.dart';
 import 'package:ecommerce_project/presentation/widgets/network_image_widget.dart';

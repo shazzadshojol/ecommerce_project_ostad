@@ -1,4 +1,4 @@
-import 'package:ecommerce_project/data/models/product_models.dart';
+import 'package:ecommerce_project/data/models/product_models/product_models.dart';
 import 'package:ecommerce_project/presentation/screens/product_details_screen.dart';
 import 'package:ecommerce_project/presentation/utility/app_colors.dart';
 import 'package:ecommerce_project/presentation/widgets/wish_or_delete_button.dart';
@@ -72,7 +72,7 @@ class ProductCard extends StatelessWidget {
                                     fontWeight: FontWeight.w600,
                                     color: AppColors.textColor)),
                             const SizedBox(width: 8),
-                            const WishOrDeleteButton()
+                            // WishOrDeleteButton(showAddToWishList: false,onTap: () {  },)
                           ],
                         )
                       ],

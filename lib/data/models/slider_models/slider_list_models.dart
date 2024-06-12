@@ -1,4 +1,4 @@
-import 'package:ecommerce_project/data/models/slider_data.dart';
+import 'package:ecommerce_project/data/models/slider_models/slider_data.dart';
 
 class SliderListModels {
   String? msg;

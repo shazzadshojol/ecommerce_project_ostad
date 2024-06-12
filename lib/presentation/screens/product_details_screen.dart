@@ -1,9 +1,11 @@
-import 'package:ecommerce_project/data/models/cart_model.dart';
-import 'package:ecommerce_project/data/models/product_details_model.dart';
+import 'package:ecommerce_project/data/models/cart_models/cart_model.dart';
+import 'package:ecommerce_project/data/models/product_models/product_details_model.dart';
 import 'package:ecommerce_project/presentation/screens/reviews_screen.dart';
-import 'package:ecommerce_project/presentation/state_holders/add_to_cart_controller.dart';
+import 'package:ecommerce_project/presentation/state_holders/cart_controllers/add_to_cart_controller.dart';
+import 'package:ecommerce_project/presentation/state_holders/wish_list_controllers/add_to_wish_list_controller.dart';
 import 'package:ecommerce_project/presentation/state_holders/product_details_controller.dart';
 import 'package:ecommerce_project/presentation/utility/app_colors.dart';
+import 'package:ecommerce_project/presentation/utility/snack_message.dart';
 import 'package:ecommerce_project/presentation/widgets/cart_increment_decrement.dart';
 import 'package:ecommerce_project/presentation/widgets/product_image_slider.dart';
 import 'package:ecommerce_project/presentation/widgets/progress_indicator.dart';
@@ -160,7 +162,21 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   Get.to(() => const ReviewsScreen());
                 },
                 child: const Text('Reviews')),
-            const WishOrDeleteButton(),
+            GetBuilder<AddToWishListController>(
+                builder: (addToWishListController) {
+              if (addToWishListController.inProgress) {
+                return Transform.scale(
+                    scale: 0.4, child: const CircularProgressIndicator());
+              }
+
+              return WishOrDeleteButton(
+                showAddToWishList: true,
+                isSelected: true,
+                onTap: () {
+                  addToWishListController.addToWishList(widget.productId);
+                },
+              );
+            }),
           ],
         )
       ],
@@ -190,7 +206,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       color: _selectColor,
                       size: _selectSize,
                       qty: _cartCounter);
-                  addToCartController.addToCart(cartModel);
+                  addToCartController.addToCart(cartModel).then((result) {
+                    if (result) {
+                      showSnackMessage(context, 'Success add to cart');
+                    } else {
+                      showSnackMessage(
+                          context, addToCartController.errorMessage);
+                    }
+                  });
                 },
                 child: const Text('Add to cart'),
               );

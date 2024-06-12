@@ -1,33 +1,31 @@
 import 'package:ecommerce_project/data/models/network_response.dart';
-import 'package:ecommerce_project/data/models/product_list_model.dart';
-import 'package:ecommerce_project/data/models/product_models.dart';
+import 'package:ecommerce_project/data/models/product_models/product_list_model.dart';
 import 'package:ecommerce_project/data/network_caller/network_caller.dart';
 import 'package:ecommerce_project/data/utility/urls.dart';
-import 'package:get/get.dart%20';
+import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
-class NewProductsListController extends GetxController {
+class ProductListByCategoryController extends GetxController {
   bool _inProgress = false;
   String _errorMessage = '';
-  List<ProductModel> _newProductList = [];
+  List _productList = [];
 
   bool get inProgress => _inProgress;
 
   String get errorMessage => _errorMessage;
 
-  List<ProductModel> get newProductList => _newProductList;
+  List get productList => _productList;
 
-  Future<bool> getNewProductList() async {
+  Future<bool> getProductList(int categoryId) async {
     bool isSuccess = false;
     _inProgress = true;
     update();
 
-    final NetworkResponse response =
-        await NetworkCaller.getRequest(url: Urls.productListByRemarks('New'));
+    final NetworkResponse response = await NetworkCaller.getRequest(
+        url: Urls.productListCategory(categoryId));
 
     if (response.isSuccess) {
-      _newProductList =
+      _productList =
           ProductListModel.fromJson(response.responseData).productList ?? [];
-      isSuccess = true;
     } else {
       _errorMessage = response.errorMessage;
     }

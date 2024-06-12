@@ -20,6 +20,7 @@ dependencies:
   http: ^1.2.1
   shared_preferences: ^2.2.3
   cached_network_image: ^3.3.1
+  item_count_number_button: ^1.0.0
 
 
 dev_dependencies:

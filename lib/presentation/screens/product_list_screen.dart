@@ -1,4 +1,4 @@
-import 'package:ecommerce_project/presentation/state_holders/product_list_by_category_controller.dart';
+import 'package:ecommerce_project/presentation/state_holders/product_list_controllers/product_list_by_category_controller.dart';
 import 'package:ecommerce_project/presentation/widgets/product_card.dart';
 import 'package:ecommerce_project/presentation/widgets/progress_indicator.dart';
 import 'package:flutter/material.dart';

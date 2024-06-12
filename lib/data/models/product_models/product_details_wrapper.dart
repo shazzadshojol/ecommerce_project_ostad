@@ -1,4 +1,4 @@
-import 'package:ecommerce_project/data/models/product_details_model.dart';
+import 'package:ecommerce_project/data/models/product_models/product_details_model.dart';
 
 class ProductDetailsWrapper {
   String? msg;

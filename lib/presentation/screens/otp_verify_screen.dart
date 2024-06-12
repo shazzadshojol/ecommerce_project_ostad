@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:ecommerce_project/presentation/screens/complete_profile_screen.dart';
-import 'package:ecommerce_project/presentation/state_holders/verify_otp_controller.dart';
+import 'package:ecommerce_project/presentation/state_holders/email_otp_controllers/verify_otp_controller.dart';
 import 'package:ecommerce_project/presentation/utility/app_colors.dart';
 import 'package:ecommerce_project/presentation/utility/snack_message.dart';
 import 'package:ecommerce_project/presentation/widgets/app_logo.dart';

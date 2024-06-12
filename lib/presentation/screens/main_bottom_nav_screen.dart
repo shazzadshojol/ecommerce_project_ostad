@@ -5,9 +5,9 @@ import 'package:ecommerce_project/presentation/screens/wish_list_screen.dart';
 import 'package:ecommerce_project/presentation/state_holders/category_list_controller.dart';
 import 'package:ecommerce_project/presentation/state_holders/home_slider_controller.dart';
 import 'package:ecommerce_project/presentation/state_holders/main_bottom_nav_controller.dart';
-import 'package:ecommerce_project/presentation/state_holders/new_products_list_controller.dart';
-import 'package:ecommerce_project/presentation/state_holders/popular_products_list_controller.dart';
-import 'package:ecommerce_project/presentation/state_holders/special_products_list_controller.dart';
+import 'package:ecommerce_project/presentation/state_holders/product_list_controllers/new_products_list_controller.dart';
+import 'package:ecommerce_project/presentation/state_holders/product_list_controllers/popular_products_list_controller.dart';
+import 'package:ecommerce_project/presentation/state_holders/product_list_controllers/special_products_list_controller.dart';
 import 'package:ecommerce_project/presentation/utility/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -51,7 +51,8 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
       bottomNavigationBar: GetBuilder<MainBottomNavController>(builder: (_) {
         return BottomNavigationBar(
           currentIndex: _mainBottomNavController.selectedIndex,
-          onTap: (index) => _mainBottomNavController.changeIndex(index),
+          // onTap: (index) => _mainBottomNavController.changeIndex(index),
+          onTap: _mainBottomNavController.changeIndex,
           selectedItemColor: AppColors.primaryColor,
           unselectedItemColor: Colors.grey,
           showUnselectedLabels: true,

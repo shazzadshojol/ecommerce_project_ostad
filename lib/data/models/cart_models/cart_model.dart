@@ -25,4 +25,12 @@ class CartModel {
     data['qty'] = qty;
     return data;
   }
+// Map<String, dynamic> toJson() {
+//   final Map<String, dynamic> data = Map<String, dynamic>();
+//   data['product_id'] = productId.toString();
+//   data['color'] = color.toString();
+//   data['size'] = size.toString();
+//   data['qty'] = qty.toString();
+//   return data;
+// }
 }

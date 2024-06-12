@@ -1,5 +1,10 @@
+import 'package:ecommerce_project/data/models/review_models/add_review_model.dart';
+import 'package:ecommerce_project/data/models/review_models/create_review_model.dart';
 import 'package:ecommerce_project/presentation/screens/add_new_reviews_screen.dart';
+import 'package:ecommerce_project/presentation/state_holders/review_controllers/add_review_controller.dart';
+import 'package:ecommerce_project/presentation/state_holders/review_controllers/create_review_controller.dart';
 import 'package:ecommerce_project/presentation/utility/app_colors.dart';
+import 'package:ecommerce_project/presentation/widgets/progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -11,6 +16,17 @@ class ReviewsScreen extends StatefulWidget {
 }
 
 class _ReviewsScreenState extends State<ReviewsScreen> {
+  final CreateReviewModel createReviewModel = Get.put(CreateReviewModel());
+
+  final AddReviewController addReviewController =
+      Get.put(AddReviewController());
+
+  @override
+  void initState() {
+    super.initState();
+    addReviewController.getUserReview(AddReviewModel());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,11 +41,20 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
         child: Column(
           children: [
             Expanded(
-              child: ListView.builder(
-                  itemCount: 5,
-                  itemBuilder: (context, index) {
-                    return _buildReviewsCard(context);
-                  }),
+              child: GetBuilder<AddReviewController>(
+                  builder: (addReviewController) {
+                if (addReviewController.inProgress) {
+                  return const ProgressIndicatorCircular();
+                }
+                return ListView.builder(
+                    itemCount:
+                        addReviewController.addReviewModel?.data?.length ?? 0,
+                    itemBuilder: (context, index) {
+                      final review =
+                          addReviewController.addReviewModel?.data?[index];
+                      return _buildReviewsCard(context, review);
+                    });
+              }),
             ),
             _buildAddReviews()
           ],
@@ -38,7 +63,7 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
     );
   }
 
-  Card _buildReviewsCard(BuildContext context) {
+  Card _buildReviewsCard(BuildContext context, ReviewData? review) {
     return Card(
       color: Colors.white,
       shadowColor: Colors.transparent,
@@ -50,20 +75,20 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
               children: [
                 IconButton(
                     onPressed: () {},
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.person_2_rounded,
                       color: Colors.grey,
                     )),
-                SizedBox(width: 4),
+                const SizedBox(width: 4),
                 Text(
-                  'Rabbil Hasan',
+                  '${createReviewModel.firstName}'
+                  '${createReviewModel.lastName}',
                   style: Theme.of(context).textTheme.titleMedium,
                 )
               ],
             ),
-            SizedBox(height: 10),
-            Text(
-                '''Step into unparalleled comfort and style with the UltraComfort Running Shoes. Designed for athletes and casual runners alike, these shoes are the perfect blend of functionality and fashion. Whether you're hitting the track or running errands, UltraComfort ensures every step is a pleasure.''')
+            const SizedBox(height: 10),
+            Text('${review?.description}')
           ],
         ),
       ),
@@ -77,13 +102,15 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Column(
+          Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Reviews (1000)',
-                style: TextStyle(
-                    fontWeight: FontWeight.w600, color: AppColors.textColor),
+                '${createReviewModel.rating ?? 0}',
+                style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.textColor),
               ),
             ],
           ),
@@ -94,7 +121,7 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
             backgroundColor: AppColors.primaryColor,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
-            child: Icon(
+            child: const Icon(
               Icons.add,
               color: Colors.white,
             ),
