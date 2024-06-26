@@ -29,6 +29,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _searchTextController = TextEditingController();
+  // final HomeSliderController sliderController = Get.put(HomeSliderController());
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +42,9 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               _buildSearchTextField(),
               const SizedBox(height: 16),
+
               GetBuilder<HomeSliderController>(builder: (sliderController) {
+
                 if (sliderController.inProgress) {
                   return const CircularIndicator();
                 }
@@ -50,6 +53,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   sliderList: sliderController.sliderList,
                 );
               }),
+
+          // HomeSliderBanner(
+          //       sliderList: sliderController.sliderList,
+          //     ),
+
               const SizedBox(height: 16),
               SectionHeader(
                 title: 'All Category',
