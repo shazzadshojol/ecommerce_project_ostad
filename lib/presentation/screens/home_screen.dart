@@ -19,7 +19,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-import '../../data/network_caller/network_caller.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

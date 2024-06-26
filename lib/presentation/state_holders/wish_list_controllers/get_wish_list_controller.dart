@@ -3,7 +3,7 @@ import 'package:ecommerce_project/data/models/wish_list_models/wish_list_item.da
 import 'package:ecommerce_project/data/models/wish_list_models/wish_list_model.dart';
 import 'package:ecommerce_project/data/network_caller/network_caller.dart';
 import 'package:ecommerce_project/data/utility/urls.dart';
-import 'package:get/get.dart%20';
+import 'package:get/get.dart';
 
 class GetWishListController extends GetxController {
   bool _inProgress = false;

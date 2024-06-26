@@ -3,7 +3,7 @@ import 'package:ecommerce_project/data/models/cart_models/cart_list_model.dart';
 import 'package:ecommerce_project/data/models/network_response.dart';
 import 'package:ecommerce_project/data/network_caller/network_caller.dart';
 import 'package:ecommerce_project/data/utility/urls.dart';
-import 'package:get/get.dart%20';
+import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
 class CartListController extends GetxController {
   bool _inProgress = false;

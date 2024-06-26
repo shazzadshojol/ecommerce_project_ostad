@@ -1,5 +1,5 @@
 import 'package:ecommerce_project/data/models/create_profile_data_model.dart';
-import 'package:ecommerce_project/presentation/screens/home_screen.dart';
+import 'package:ecommerce_project/presentation/screens/main_bottom_nav_screen.dart';
 import 'package:ecommerce_project/presentation/state_holders/auth_controller.dart';
 import 'package:ecommerce_project/presentation/state_holders/profile_controllers/create_profile_controller.dart';
 import 'package:ecommerce_project/presentation/state_holders/profile_controllers/read_profile_controller.dart';
@@ -52,6 +52,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
   void initState() {
     super.initState();
     _loadProfileData();
+
   }
 
   Future<void> _loadProfileData() async {
@@ -241,7 +242,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                       await profileController.saveUserDetails(profileModel);
 
                   if (result) {
-                    Get.to(() => const HomeScreen());
+                    Get.to(() => const MainBottomNavScreen());
                   } else {
                     {
                       if (mounted) {

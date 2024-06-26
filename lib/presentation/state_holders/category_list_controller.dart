@@ -3,7 +3,7 @@ import 'package:ecommerce_project/data/models/category_model/category_data.dart'
 import 'package:ecommerce_project/data/models/network_response.dart';
 import 'package:ecommerce_project/data/network_caller/network_caller.dart';
 import 'package:ecommerce_project/data/utility/urls.dart';
-import 'package:get/get.dart%20';
+import 'package:get/get.dart';
 
 class CategoryListController extends GetxController {
   bool _inProgress = false;

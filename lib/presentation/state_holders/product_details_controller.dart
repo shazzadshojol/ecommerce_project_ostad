@@ -3,7 +3,7 @@ import 'package:ecommerce_project/data/models/product_models/product_details_mod
 import 'package:ecommerce_project/data/models/product_models/product_details_wrapper.dart';
 import 'package:ecommerce_project/data/network_caller/network_caller.dart';
 import 'package:ecommerce_project/data/utility/urls.dart';
-import 'package:get/get.dart%20';
+import 'package:get/get.dart';
 
 class ProductDetailsController extends GetxController {
   bool _inProgress = false;

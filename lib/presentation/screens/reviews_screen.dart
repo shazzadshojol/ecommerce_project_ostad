@@ -2,7 +2,6 @@ import 'package:ecommerce_project/data/models/review_models/add_review_model.dar
 import 'package:ecommerce_project/data/models/review_models/create_review_model.dart';
 import 'package:ecommerce_project/presentation/screens/add_new_reviews_screen.dart';
 import 'package:ecommerce_project/presentation/state_holders/review_controllers/add_review_controller.dart';
-import 'package:ecommerce_project/presentation/state_holders/review_controllers/create_review_controller.dart';
 import 'package:ecommerce_project/presentation/utility/app_colors.dart';
 import 'package:ecommerce_project/presentation/widgets/progress_indicator.dart';
 import 'package:flutter/material.dart';

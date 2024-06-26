@@ -1,10 +1,9 @@
-import 'dart:developer';
-import 'dart:ffi';
+
 import 'package:ecommerce_project/data/models/create_profile_data_model.dart';
 import 'package:ecommerce_project/data/models/network_response.dart';
 import 'package:ecommerce_project/data/network_caller/network_caller.dart';
 import 'package:ecommerce_project/data/utility/urls.dart';
-import 'package:get/get.dart%20';
+import 'package:get/get.dart';
 
 import '../auth_controller.dart';
 

@@ -1,10 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ecommerce_project/data/models/slider_models/slider_data.dart';
-import 'package:ecommerce_project/presentation/screens/complete_profile_screen.dart';
 import 'package:ecommerce_project/presentation/utility/app_colors.dart';
 import 'package:ecommerce_project/presentation/widgets/network_image_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class HomeSliderBanner extends StatefulWidget {
   const HomeSliderBanner({
