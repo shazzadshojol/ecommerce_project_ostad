@@ -254,7 +254,9 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                 }
               } catch (e) {
                 e.toString();
-                //I added FVM and then some problem happened. Actually I submitted the FVM branch link for the problem. Please check master branch code
+                //I added FVM and then some problem happened.
+                // Actually I submitted the FVM branch link for the problem.
+                // Please check master branch code
               }
             },
             child: const Text('Complete'),
